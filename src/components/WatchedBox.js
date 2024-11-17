@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-import { tempWatchedData } from "../data/Data";
 import WatchedSummary from "./WatchedSummary";
 import WatchedMoviesList from "./WatchedMoviesList";
+
+import { tempWatchedData } from "../data/Data";
 
 export default function WatchedBox() {
   const [watched, setWatched] = useState(tempWatchedData);
