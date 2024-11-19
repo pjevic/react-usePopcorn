@@ -12,6 +12,7 @@ import ErrorMessage from "./components/ErrorMessage";
 import MovieList from "./components/MovieList";
 import WatchedSummary from "./components/WatchedSummary";
 import SelectedMovie from "./components/SelectedMovie";
+import StarRating from "./components/StarRating";
 import WatchedMoviesList from "./components/WatchedMoviesList";
 
 const KEY = "77664bd9";
