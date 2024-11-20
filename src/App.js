@@ -12,7 +12,6 @@ import ErrorMessage from "./components/ErrorMessage";
 import MovieList from "./components/MovieList";
 import WatchedSummary from "./components/WatchedSummary";
 import SelectedMovie from "./components/SelectedMovie";
-import StarRating from "./components/StarRating";
 import WatchedMoviesList from "./components/WatchedMoviesList";
 
 const KEY = "77664bd9";
@@ -31,6 +30,15 @@ export default function App() {
 
   function handleCloseMovie() {
     setSelectedID(null);
+  }
+
+  function handleAddWatched(movie) {
+    const exist = watched.some((watchedMovie) => watchedMovie.imdbID === selectedID);
+    if (!exist) setWatched((watched) => [movie, ...watched]);
+  }
+
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
   useEffect(
@@ -81,11 +89,19 @@ export default function App() {
         </Box>
         <Box>
           {selectedID ? (
-            <SelectedMovie selectedID={selectedID} onCloseMovie={handleCloseMovie} />
+            <SelectedMovie
+              selectedID={selectedID}
+              onCloseMovie={handleCloseMovie}
+              onAddWatched={handleAddWatched}
+              watched={watched}
+            />
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMoviesList watched={watched} />{" "}
+              <WatchedMoviesList
+                watched={watched}
+                odDeleteWatched={handleDeleteWatched}
+              />
             </>
           )}
         </Box>
