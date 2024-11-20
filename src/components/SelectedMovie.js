@@ -71,6 +71,11 @@ export default function SelectedMovie({
     function () {
       if (!title) return;
       document.title = `Movie | ${title}`;
+
+      // Return hapens after component is unmounted - "Clean Up Function"
+      return function () {
+        document.title = "usePopcorn";
+      };
     },
     [title]
   );
