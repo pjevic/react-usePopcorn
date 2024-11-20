@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import Loader from "./Loader";
 
@@ -15,11 +15,12 @@ export default function SelectedMovie({
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
-
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedID);
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedID
   )?.userRating;
+
+  const countRef = useRef(0);
 
   const {
     Title: title,
@@ -43,6 +44,7 @@ export default function SelectedMovie({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime.split(" ").at(0)),
       userRating,
+      countRatingDecision: countRef.current,
     };
 
     onAddWatched(newWatchedMovie);
@@ -88,7 +90,6 @@ export default function SelectedMovie({
           // console.log("CLOSING");
         }
       }
-
       document.addEventListener("keydown", callback);
 
       return function () {
@@ -96,6 +97,13 @@ export default function SelectedMovie({
       };
     },
     [onCloseMovie]
+  );
+
+  useEffect(
+    function () {
+      if (userRating) countRef.current++;
+    },
+    [userRating]
   );
 
   return (
